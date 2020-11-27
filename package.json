@@ -1,0 +1,27 @@
+{
+  "name": "automated-screenshot-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "cross-fetch": "^3.0.6",
+    "googleapis": "^39.2.0",
+    "node-fetch": "^2.6.1",
+    "screenshotmachine": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nga-pham/automated-screenshot-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nga-pham/automated-screenshot-generator/issues"
+  },
+  "homepage": "https://github.com/nga-pham/automated-screenshot-generator#readme"
+}

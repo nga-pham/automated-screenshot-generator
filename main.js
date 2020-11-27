@@ -5,7 +5,7 @@ const urlGenerated = () => {
   secretPhrase = ""; //leave secret phrase empty, if not needed
   options = {
     //mandatory parameter
-    url: "https://api.screenshotmachine.com",
+    url: "https://ifunded.de/en/",
     // all next parameters are optional, see our website screenshot API guide for more details
     dimension: "1920x1080", // or "1366xfull" for full length screenshot
   };
