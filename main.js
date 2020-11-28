@@ -20,6 +20,7 @@ const generateUrl = (url) => {
 
 /**
  * Function to read data
+ * @param fs file system variable
  */
 readData = async () => {
   const fs = require("fs").promises;
@@ -44,6 +45,10 @@ takeScreenshot = (data) => {
     );
   });
 };
+
+/**
+ * Function to upload data to Google Drive
+ */
 
 generator = async () => {
   let data = await readData();
