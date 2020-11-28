@@ -20,27 +20,34 @@ const generateUrl = (url) => {
 
 /**
  * Function to read data
- * @param fs file system variable
  */
-readData = async (fs) => {
+readData = async () => {
+  const fs = require("fs").promises;
   let path = "./data/webPages.json";
   const buffer_data = await fs.readFile(path);
   return JSON.parse(buffer_data.toString());
 };
 
+/**
+ * Function to take screenshot of 5 webpages
+ * @param {data from json file} data
+ */
+takeScreenshot = (data) => {
+  data.forEach((element) => {
+    const fs = require("fs");
+    const name = element.id + "_name.jpg"; // name of each output image
+    const url_generated = generateUrl(element.url); // url to read screenshot
+    screenshotmachine.readScreenshot(url_generated).pipe(
+      fs.createWriteStream(name).on("close", () => {
+        console.log("Screenshot saved as " + name);
+      })
+    );
+  });
+};
+
 generator = async () => {
-  let url = "https://ifunded.de/en/";
-  let url_generated = generateUrl(url);
-  var fs = require("fs").promises;
-  let data = await readData(fs);
-  console.log(data);
-  //save screenshot as an image
-  // var output = "iFunded_name.jpg";
-  // screenshotmachine.readScreenshot(url_generated).pipe(
-  //   fs.createWriteStream(output).on("close", () => {
-  //     console.log("Screenshot saved as " + output);
-  //   })
-  // );
+  let data = await readData();
+  takeScreenshot(data);
 
   // const fetch = require("node-fetch");
   // let response = await fetch(url);
