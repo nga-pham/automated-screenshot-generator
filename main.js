@@ -30,18 +30,27 @@ readData = async () => {
 };
 
 /**
+ * Function to generate output image path for future use
+ * @param {each element in json file} element
+ */
+generatePath = (element) => {
+  const name = element.id + "_name.jpg"; // name of each output image
+  const url_generated = generateUrl(element.url); // url to read screenshot
+  const path = "./images/" + name; // path for output images
+  return { path, url_generated };
+};
+
+/**
  * Function to take screenshot of 5 webpages
  * @param {data from json file} data
  */
 takeScreenshot = (data) => {
   data.forEach((element) => {
     const fs = require("fs");
-    const name = element.id + "_name.jpg"; // name of each output image
-    const url_generated = generateUrl(element.url); // url to read screenshot
-    const path = "./images/" + name; // path for output images
+    const { path, url_generated } = generatePath(element);
     screenshotmachine.readScreenshot(url_generated).pipe(
       fs.createWriteStream(path).on("close", () => {
-        console.log("Screenshot saved as " + name);
+        console.log("Screenshot saved as " + path);
       })
     );
   });
@@ -50,11 +59,12 @@ takeScreenshot = (data) => {
 /**
  * Function to upload data to Google Drive
  */
+const uploadData = (data) => {};
 
 generator = async () => {
   let data = await readData();
   takeScreenshot(data);
-
+  uploadData();
   // const fetch = require("node-fetch");
   // let response = await fetch(url);
 
