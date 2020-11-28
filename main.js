@@ -38,8 +38,9 @@ takeScreenshot = (data) => {
     const fs = require("fs");
     const name = element.id + "_name.jpg"; // name of each output image
     const url_generated = generateUrl(element.url); // url to read screenshot
+    const path = "./images/" + name; // path for output images
     screenshotmachine.readScreenshot(url_generated).pipe(
-      fs.createWriteStream(name).on("close", () => {
+      fs.createWriteStream(path).on("close", () => {
         console.log("Screenshot saved as " + name);
       })
     );
