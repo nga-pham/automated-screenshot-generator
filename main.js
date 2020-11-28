@@ -20,9 +20,9 @@ const generateUrl = (url) => {
 
 /**
  * Function to read data
+ * @param fs file system variable
  */
-readData = async () => {
-  const fs = require("fs").promises;
+readData = async (fs) => {
   let path = "./data/webPages.json";
   const buffer_data = await fs.readFile(path);
   return JSON.parse(buffer_data.toString());
