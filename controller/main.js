@@ -1,4 +1,6 @@
 const screenshotmachine = require("screenshotmachine");
+const fs = require("fs");
+const fs_promises = require("fs").promises;
 
 /**
  * Function to generate standard url that used in API
@@ -20,12 +22,10 @@ const generateUrl = (url) => {
 
 /**
  * Function to read data
- * @param fs file system variable
  */
 readData = async () => {
-  const fs = require("fs").promises;
-  let path = "./data/webPages.json";
-  const buffer_data = await fs.readFile(path);
+  let path = "../data/webPages.json";
+  const buffer_data = await fs_promises.readFile(path);
   return JSON.parse(buffer_data.toString());
 };
 
@@ -36,7 +36,7 @@ readData = async () => {
 generatePath = (element) => {
   const name = element.id + "_name.jpg"; // name of each output image
   const url_generated = generateUrl(element.url); // url to read screenshot
-  const path = "./images/" + name; // path for output images
+  const path = "../images/" + name; // path for output images
   return { path, url_generated };
 };
 
@@ -46,7 +46,6 @@ generatePath = (element) => {
  */
 takeScreenshot = (data) => {
   data.forEach((element) => {
-    const fs = require("fs");
     const { path, url_generated } = generatePath(element);
     screenshotmachine.readScreenshot(url_generated).pipe(
       fs.createWriteStream(path).on("close", () => {
@@ -57,14 +56,20 @@ takeScreenshot = (data) => {
 };
 
 /**
- * Function to upload data to Google Drive
+ *Function to upload data to Google Drive
+ * @param {*} data
  */
-const uploadData = (data) => {};
+const uploadData = (data) => {
+  data.forEach((element) => {
+    const { path } = generatePath(element);
+    console.log(path);
+  });
+};
 
-generator = async () => {
+async function generateImage() {
   let data = await readData();
   takeScreenshot(data);
-  uploadData();
+  uploadData(data);
   // const fetch = require("node-fetch");
   // let response = await fetch(url);
 
@@ -75,7 +80,11 @@ generator = async () => {
   // } else {
   //   console.log("HTTP-Error: " + response.status);
   // }
-};
+}
 
-// Run the generator
-generator();
+function main() {
+  generateImage();
+}
+
+// Run the app
+main();
