@@ -84,7 +84,29 @@ function getAccessToken(oAuth2Client, callback) {
  */
 
 const uploadFile = (auth) => {
-  console.log("functionCalled");
+  const drive = google.drive({ version: "v3", auth });
+  var fileMetadata = {
+    name: "iFunded_name.jpg",
+  };
+  var media = {
+    mimeType: "image/jpeg",
+    body: fs.createReadStream("..images/iFunded_name.jpg"),
+  };
+  drive.files.create(
+    {
+      resource: fileMetadata,
+      media: media,
+      fields: "id",
+    },
+    function (err, file) {
+      if (err) {
+        // Handle error
+        console.error(err);
+      } else {
+        console.log("File Id: ", file.id);
+      }
+    }
+  );
 };
 function listFiles(auth) {
   // const drive = google.drive({ version: "v3", auth });
