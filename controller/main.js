@@ -1,6 +1,7 @@
 const screenshotmachine = require("screenshotmachine");
 const fs = require("fs");
 const fs_promises = require("fs").promises;
+const 
 
 /**
  * Function to generate standard url that used in API
@@ -69,7 +70,6 @@ const uploadData = (data) => {
 async function generateImage() {
   let data = await readData();
   takeScreenshot(data);
-  uploadData(data);
   // const fetch = require("node-fetch");
   // let response = await fetch(url);
 

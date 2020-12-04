@@ -1,19 +1,28 @@
+/**
+ * 
+    User will Sign In
+    User will be asked for authorization
+    Once user gives the authorization we will recieve a token and start uploading files
+
+ */
+
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"];
+const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = "token.json";
+const TOKEN_PATH = "../data/token.json";
+const CRE_PATH = "../data/credentials.json";
 
 // Load client secrets from a local file.
-fs.readFile("credentials.json", (err, content) => {
+fs.readFile(CRE_PATH, (err, content) => {
   if (err) return console.log("Error loading client secret file:", err);
   // Authorize a client with credentials, then call the Google Drive API.
-  authorize(JSON.parse(content), listFiles);
+  authorize(JSON.parse(content), uploadFile);
 });
 
 /**
@@ -70,27 +79,31 @@ function getAccessToken(oAuth2Client, callback) {
 }
 
 /**
- * Lists the names and IDs of up to 10 files.
+ * Upload the captured images to google Drive
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
+
+const uploadFile = (auth) => {
+  console.log("functionCalled");
+};
 function listFiles(auth) {
-  const drive = google.drive({ version: "v3", auth });
-  drive.files.list(
-    {
-      pageSize: 10,
-      fields: "nextPageToken, files(id, name)",
-    },
-    (err, res) => {
-      if (err) return console.log("The API returned an error: " + err);
-      const files = res.data.files;
-      if (files.length) {
-        console.log("Files:");
-        files.map((file) => {
-          console.log(`${file.name} (${file.id})`);
-        });
-      } else {
-        console.log("No files found.");
-      }
-    }
-  );
+  // const drive = google.drive({ version: "v3", auth });
+  // drive.files.list(
+  //   {
+  //     pageSize: 10,
+  //     fields: "nextPageToken, files(id, name)",
+  //   },
+  //   (err, res) => {
+  //     if (err) return console.log("The API returned an error: " + err);
+  //     const files = res.data.files;
+  //     if (files.length) {
+  //       console.log("Files:");
+  //       files.map((file) => {
+  //         console.log(`${file.name} (${file.id})`);
+  //       });
+  //     } else {
+  //       console.log("No files found.");
+  //     }
+  //   }
+  // );
 }
