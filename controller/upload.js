@@ -85,12 +85,13 @@ function getAccessToken(oAuth2Client, callback) {
 
 const uploadFile = (auth) => {
   const drive = google.drive({ version: "v3", auth });
+  const path_string = "../images/iFunded_name.jpg";
   var fileMetadata = {
     name: "iFunded_name.jpg",
   };
   var media = {
     mimeType: "image/jpeg",
-    body: fs.createReadStream("..images/iFunded_name.jpg"),
+    body: fs.createReadStream(path_string),
   };
   drive.files.create(
     {
@@ -103,29 +104,8 @@ const uploadFile = (auth) => {
         // Handle error
         console.error(err);
       } else {
-        console.log("File Id: ", file.id);
+        console.log("File Id: ", file.data.id);
       }
     }
   );
 };
-function listFiles(auth) {
-  // const drive = google.drive({ version: "v3", auth });
-  // drive.files.list(
-  //   {
-  //     pageSize: 10,
-  //     fields: "nextPageToken, files(id, name)",
-  //   },
-  //   (err, res) => {
-  //     if (err) return console.log("The API returned an error: " + err);
-  //     const files = res.data.files;
-  //     if (files.length) {
-  //       console.log("Files:");
-  //       files.map((file) => {
-  //         console.log(`${file.name} (${file.id})`);
-  //       });
-  //     } else {
-  //       console.log("No files found.");
-  //     }
-  //   }
-  // );
-}
