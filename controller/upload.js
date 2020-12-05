@@ -3,7 +3,6 @@
     User will Sign In
     User will be asked for authorization
     Once user gives the authorization we will recieve a token and start uploading files
-
  */
 
 const fs = require("fs");
@@ -19,11 +18,13 @@ const TOKEN_PATH = "../data/token.json";
 const CRE_PATH = "../data/credentials.json";
 
 // Load client secrets from a local file.
-fs.readFile(CRE_PATH, (err, content) => {
-  if (err) return console.log("Error loading client secret file:", err);
-  // Authorize a client with credentials, then call the Google Drive API.
-  authorize(JSON.parse(content), uploadFile);
-});
+const uploadImages = () => {
+  fs.readFile(CRE_PATH, (err, content) => {
+    if (err) return console.log("Error loading client secret file:", err);
+    // Authorize a client with credentials, then call the Google Drive API.
+    authorize(JSON.parse(content), uploadFile);
+  });
+};
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -31,7 +32,7 @@ fs.readFile(CRE_PATH, (err, content) => {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+const authorize = (credentials, callback) => {
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -45,7 +46,7 @@ function authorize(credentials, callback) {
     oAuth2Client.setCredentials(JSON.parse(token));
     callback(oAuth2Client);
   });
-}
+};
 
 /**
  * Get and store new token after prompting for user authorization, and then
@@ -53,7 +54,7 @@ function authorize(credentials, callback) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client, callback) {
+const getAccessToken = (oAuth2Client, callback) => {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -76,7 +77,7 @@ function getAccessToken(oAuth2Client, callback) {
       callback(oAuth2Client);
     });
   });
-}
+};
 
 /**
  * Upload the captured images to google Drive
@@ -99,7 +100,7 @@ const uploadFile = (auth) => {
       media: media,
       fields: "id",
     },
-    function (err, file) {
+    (err, file) => {
       if (err) {
         // Handle error
         console.error(err);
@@ -108,4 +109,8 @@ const uploadFile = (auth) => {
       }
     }
   );
+};
+
+module.exports = {
+  uploadImages,
 };

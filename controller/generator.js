@@ -23,7 +23,7 @@ const generateUrl = (url) => {
 /**
  * Function to read data
  */
-readData = async () => {
+const readData = async () => {
   let path = "../data/webPages.json";
   const buffer_data = await fs_promises.readFile(path);
   return JSON.parse(buffer_data.toString());
@@ -33,10 +33,10 @@ readData = async () => {
  * Function to generate output image path for future use
  * @param {each element in json file} element
  */
-generatePath = (element) => {
+const generatePath = (element) => {
   const name = element.id + "_name.jpg"; // name of each output image
   const url_generated = generateUrl(element.url); // url to read screenshot
-  const path = "./images/" + name; // path for output images
+  const path = "../images/" + name; // path for output images
   return { path, url_generated };
 };
 
@@ -44,7 +44,7 @@ generatePath = (element) => {
  * Function to take screenshot of 5 webpages
  * @param {data from json file} data
  */
-takeScreenshot = (data) => {
+const takeScreenshot = (data) => {
   data.forEach((element) => {
     const { path, url_generated } = generatePath(element);
     screenshotmachine.readScreenshot(url_generated).pipe(
@@ -55,32 +55,10 @@ takeScreenshot = (data) => {
   });
 };
 
-/**
- *Function to upload data to Google Drive
- * @param {*} data
- */
-const uploadData = (data) => {
-  data.forEach((element) => {
-    const { path } = generatePath(element);
-    console.log(path);
-  });
-};
-
-async function generateImage() {
+const generateImage = async () => {
   let data = await readData();
   takeScreenshot(data);
-  uploadData(data);
-  // const fetch = require("node-fetch");
-  // let response = await fetch(url);
-
-  // if (response.ok) {
-  //   // if HTTP-status is 200-299
-  //   let json = await response.body;
-  //   // console.log(json);
-  // } else {
-  //   console.log("HTTP-Error: " + response.status);
-  // }
-}
+};
 
 module.exports = {
   generateImage,

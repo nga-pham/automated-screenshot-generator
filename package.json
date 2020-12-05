@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "type": "module",
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "googleapis": "^39.2.0",
     "node-fetch": "^2.6.1",
+    "npm": "^6.14.9",
     "screenshotmachine": "^2.0.0"
   },
   "devDependencies": {},
