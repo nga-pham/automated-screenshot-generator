@@ -16,7 +16,7 @@ const readData = async () => {
  * @param {each element in json file} element
  */
 const generatePath = (element) => {
-  const name = element.id + "_name.jpg"; // name of each output image
+  const name = element.name + "_name.jpg"; // name of each output image
   const url_generated = generateUrl(element.url); // url to read screenshot
   const path = "../images/" + name; // path for output images
   return { path, name, url_generated };

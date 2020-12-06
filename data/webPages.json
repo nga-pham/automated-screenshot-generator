@@ -1,22 +1,22 @@
 [
   {
-    "id": "iFunded",
+    "name": "iFunded",
     "url": "https://ifunded.de/en/"
   },
   {
-    "id": "Property Partner",
+    "name": "Property Partner",
     "url": "https://www.propertypartner.co"
   },
   {
-    "id": "Property Moose",
+    "name": "Property Moose",
     "url": "https://propertymoose.co.uk"
   },
   {
-    "id": "Homegrown",
+    "name": "Homegrown",
     "url": "https://www.homegrown.co.uk"
   },
   {
-    "id": "Realty Mogul",
+    "name": "Realty Mogul",
     "url": "https://www.realtymogul.com"
   }
 ]

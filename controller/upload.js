@@ -8,6 +8,7 @@
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
+const retrieve_data = require("./retrieve_data");
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
@@ -104,7 +105,7 @@ const uploadImage = (auth, name, path_string) => {
         // Handle error
         console.error(err);
       } else {
-        console.log("File Id: ", file.data.id);
+        console.log("Successfully save file as: ", file.data.id);
       }
     }
   );
@@ -114,8 +115,12 @@ const uploadImage = (auth, name, path_string) => {
  * Upload all images to google Drive
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-const uploadImages = () => {
-  // let data = await readData();
+const uploadImages = async (auth) => {
+  let data = await retrieve_data.readData();
+  data.forEach((element) => {
+    const { path, name } = retrieve_data.generatePath(element);
+    uploadImage(auth, name, path);
+  });
 };
 
 module.exports = {
