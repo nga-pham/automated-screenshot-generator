@@ -89,6 +89,7 @@ const uploadImage = (auth, name, path_string) => {
   // const path_string = "../images/iFunded_name.jpg";
   var fileMetadata = {
     name: name,
+    parents: ["1NwbxYOuVGseSvzg8UH2UyUXqsFSEoNft"],
   };
   var media = {
     mimeType: "image/jpeg",
