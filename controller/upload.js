@@ -88,7 +88,7 @@ const uploadImage = (auth, name, path_string) => {
   const drive = google.drive({ version: "v3", auth });
   // const path_string = "../images/iFunded_name.jpg";
   var fileMetadata = {
-    name: "iFunded_name.jpg",
+    name: name,
   };
   var media = {
     mimeType: "image/jpeg",
