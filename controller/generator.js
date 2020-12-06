@@ -1,6 +1,7 @@
 const screenshotmachine = require("screenshotmachine");
 const fs = require("fs");
 const fs_promises = require("fs").promises;
+const retrieve_data = require("./retrieve_data");
 
 /**
  * Function to generate standard url that used in API
@@ -37,7 +38,7 @@ const generatePath = (element) => {
   const name = element.id + "_name.jpg"; // name of each output image
   const url_generated = generateUrl(element.url); // url to read screenshot
   const path = "../images/" + name; // path for output images
-  return { path, url_generated };
+  return { path, name, url_generated };
 };
 
 /**
@@ -46,7 +47,7 @@ const generatePath = (element) => {
  */
 const takeScreenshot = (data) => {
   data.forEach((element) => {
-    const { path, url_generated } = generatePath(element);
+    const { path, url_generated } = retrieve_data.generatePath(element);
     screenshotmachine.readScreenshot(url_generated).pipe(
       fs.createWriteStream(path).on("close", () => {
         console.log("Screenshot saved as " + path);
@@ -56,7 +57,7 @@ const takeScreenshot = (data) => {
 };
 
 const generateImage = async () => {
-  let data = await readData();
+  let data = await retrieve_data.readData();
   takeScreenshot(data);
 };
 

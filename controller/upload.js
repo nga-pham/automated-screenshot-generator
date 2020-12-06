@@ -18,11 +18,11 @@ const TOKEN_PATH = "../data/token.json";
 const CRE_PATH = "../data/credentials.json";
 
 // Load client secrets from a local file.
-const uploadImages = () => {
+const authorizeAndUpload = () => {
   fs.readFile(CRE_PATH, (err, content) => {
     if (err) return console.log("Error loading client secret file:", err);
     // Authorize a client with credentials, then call the Google Drive API.
-    authorize(JSON.parse(content), uploadFile);
+    authorize(JSON.parse(content), uploadImages);
   });
 };
 
@@ -80,13 +80,12 @@ const getAccessToken = (oAuth2Client, callback) => {
 };
 
 /**
- * Upload the captured images to google Drive
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ * Upload one captured image to Google Drive
+ * @param {*} auth
  */
-
-const uploadFile = (auth) => {
+const uploadImage = (auth, name, path_string) => {
   const drive = google.drive({ version: "v3", auth });
-  const path_string = "../images/iFunded_name.jpg";
+  // const path_string = "../images/iFunded_name.jpg";
   var fileMetadata = {
     name: "iFunded_name.jpg",
   };
@@ -111,6 +110,14 @@ const uploadFile = (auth) => {
   );
 };
 
+/**
+ * Upload all images to google Drive
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+const uploadImages = () => {
+  // let data = await readData();
+};
+
 module.exports = {
-  uploadImages,
+  authorizeAndUpload,
 };

@@ -3,7 +3,7 @@ const generator = require("./generator");
 
 function main() {
   generator.generateImage();
-  upload.uploadImages();
+  upload.authorizeAndUpload();
 }
 
 // Run the app
